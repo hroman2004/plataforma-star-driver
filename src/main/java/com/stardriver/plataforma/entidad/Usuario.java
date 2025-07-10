@@ -12,7 +12,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "nombre_usuario")
+    @Column(name = "nombre_usuario", unique = true)
     private String nombreUsuario;
 
     @Column(name = "rol")
