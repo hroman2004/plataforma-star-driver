@@ -12,6 +12,7 @@ public class Soporte {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @OneToOne
     @JoinColumn(name = "id_usuario", unique = true, nullable = false)
     private Usuario usuario;
 
