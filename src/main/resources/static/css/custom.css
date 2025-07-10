@@ -1,0 +1,40 @@
+
+.bg-main {
+    background-color: #3a3a3a;
+}
+
+.btn-primary,
+.btn-primary:focus,
+.btn-primary:hover,
+.btn-primary:active {
+    background-color: #D32F2F !important;
+    border-color: #D32F2F !important;
+}
+
+.bg-primary {
+    background-color: #D32F2F !important;
+    border-color: #D32F2F !important;
+}
+
+.border-primary {
+    border-color: #D32F2F !important;
+}
+
+.text-primary {
+    color: #D32F2F !important;
+}
+
+.video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.overlay-content {
+    position: relative;
+    z-index: 1;
+}
