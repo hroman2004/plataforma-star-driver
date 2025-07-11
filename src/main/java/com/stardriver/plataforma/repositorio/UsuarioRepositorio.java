@@ -13,4 +13,8 @@ public interface UsuarioRepositorio extends CrudRepository<Usuario, Integer> {
 
     @Query(value = "SELECT * FROM usuario WHERE nombre_usuario = :nombre_usuario", nativeQuery = true)
     Optional<Usuario> findByUsername(@Param("nombre_usuario") String username);
+
+    default boolean existsByUsername(String username) {
+        return this.findByUsername(username).isPresent();
+    }
 }

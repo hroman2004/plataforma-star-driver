@@ -12,6 +12,10 @@ public class Estudiante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @OneToOne
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
+
     @Column(nullable = false)
     private String nombre;
 
