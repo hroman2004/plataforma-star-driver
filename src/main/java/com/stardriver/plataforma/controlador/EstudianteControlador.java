@@ -30,4 +30,22 @@ public class EstudianteControlador {
 
         return "estudiante/pagos.html";
     }
+
+    @RequestMapping("estudiante/programacion-clase")
+    private String programacionClase(HttpSession session) {
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/login";
+        }
+
+        return "estudiante/programacion-clase.html";
+    }
+
+    @RequestMapping("estudiante/reportes")
+    private String reportes(HttpSession session) {
+        if (session.getAttribute("usuario") == null) {
+            return "redirect:/login";
+        }
+
+        return "estudiante/reportes.html";
+    }
 }
