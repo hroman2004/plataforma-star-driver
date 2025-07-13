@@ -48,7 +48,7 @@
                     <th>Acciones</th>
                 </tr>
 
-                <tr th:each="pago : ${pagos}">
+                <tr th:each="pago : ${pagosPendientes}">
 
                     <td th:text="${pago.tramite.nombre}"></td>
                     <td th:text="${pago.metodo}"></td>
