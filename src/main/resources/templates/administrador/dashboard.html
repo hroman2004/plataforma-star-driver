@@ -8,12 +8,118 @@
         <!-- BOOTSTRAP 5 -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+
+        <!-- JQUERY -->
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+        <!-- DATA TABLES + BOOTSTRAP -->
+        <link href="https://cdn.datatables.net/2.3.2/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.min.js"></script>
+
         <!-- CUSTOM -->
         <link rel="stylesheet" th:href="@{/css/custom.css}">
     </head>
     <body>
-        <div id="pagos" class="modal fade" tabindex="-1">
+        <script>
+            $(document).ready(() => {
+                $.ajax({
+                    url: '/api/pagos',
+                    method: 'GET',
+                    headers: {
+                        'X-API-KEY': 'star_driver_secret'
+                    },
+                    success: (data) => {
+                        $('#tabla-pagos').DataTable({
+                            data,
+                            columns: [
+                                {data: 'id'},
+                                {data: 'estudiante.nombre'},
+                                {data: 'metodo'},
+                                {data: 'estado'},
+                                {data: 'fecha'},
+                                {data: 'fechaCancelado'},
+                                {data: 'tramite.nombre'}
+                            ]
+                        })
+                    }
+                })
 
+                $.ajax({
+                    url: '/api/estudiantes',
+                    method: 'GET',
+                    headers: {
+                        'X-API-KEY': 'star_driver_secret'
+                    },
+                    success: (data) => {
+
+                        $('#tabla-estudiantes').DataTable({
+                            data,
+                            columns: [
+                                {data: 'id'},
+                                {data: 'nombre'},
+                                {data: 'apellidos'},
+                                {data: 'dni'},
+                                {data: 'telefono'},
+                                {data: 'correo'}
+                            ]
+                        })
+                    }
+                })
+                
+                $.ajax({
+                    url: '/api/clases',
+                    method: 'GET',
+                    headers: {
+                        'X-API-KEY': 'star_driver_secret'
+                    },
+                    success: (data) => {
+                        $('#tabla-clases').DataTable({
+                            data,
+                            columns: [
+                                {data: 'id'},
+                                {data: 'horario'},
+                                {data: 'profesor.nombre'},
+                                {data: 'estudiante.nombre'},
+                                {data: 'fecha'},
+                                {data: 'horaInicio'},
+                                {data: 'horaFinal'},
+                                {data: 'tipoVehiculo'}
+                            ]
+                        })
+                    }
+                })
+            })
+        </script>
+
+        <div id="pagos" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Pagos</h2>
+                    </div>
+                    <div class="modal-body">
+                        <table id="tabla-pagos" class="table">
+                            <thead>
+                                <tr>
+                                    <td>#</td>
+                                    <td>Estudiante</td>
+                                    <td>Método</td>
+                                    <td>Estado</td>
+                                    <td>Fecha</td>
+                                    <td>Fecha Cancelado</td>
+                                    <td>Tramite</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="estudiantes" class="modal fade" tabindex="-1">
             <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
@@ -22,7 +128,7 @@
                         <h2>Pagos</h2>
                     </div>
                     <div class="modal-body">
-                        <table class="table">
+                        <table id="tabla-estudiantes" class="table">
                             <thead>
                                 <tr>
                                     <td>#</td>
@@ -34,14 +140,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="estudiante : ${estudiantes}">
-                                    <td th:text="${estudiante.id}"></td>
-                                    <td th:text="${estudiante.nombre}"></td>
-                                    <td th:text="${estudiante.apellidos}"></td>
-                                    <td th:text="${estudiante.dni}"></td>
-                                    <td th:text="${estudiante.telefono}"></td>
-                                    <td th:text="${estudiante.correo}"></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -52,7 +150,33 @@
             </div>
         </div>
         <div id="clases" class="modal fade" tabindex="-1">
-
+            <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Pagos</h2>
+                    </div>
+                    <div class="modal-body">
+                        <table id="tabla-clases" class="table">
+                            <thead>
+                                <tr>
+                                    <td>#</td>
+                                    <td>Profesor</td>
+                                    <td>Estudiante</td>
+                                    <td>Fecha</td>
+                                    <td>Hora Inicio</td>
+                                    <td>Hora Final</td>
+                                    <td>Tipo Vehículo</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <video class="video" th:src="@{/videos/dashboard.mp4}" autoplay muted loop></video>
