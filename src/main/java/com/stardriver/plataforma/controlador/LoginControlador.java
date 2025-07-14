@@ -18,8 +18,16 @@ public class LoginControlador {
     @RequestMapping("/login")
     private String login(HttpSession session) {
         if (session.getAttribute("usuario") != null) {
-            return "redirect:/estudiante/dashboard";
+            String rol = (String) session.getAttribute("rol");
+
+            if ("estudiante".equals(rol)) {
+                return "redirect:/estudiante/dashboard";
+            }
+            if ("administrador".equals(rol)) {
+                return "redirect:/administrador/dashboard";
+            }
         }
+
         return "login.html";
     }
 
@@ -37,11 +45,10 @@ public class LoginControlador {
             }
 
             session.setAttribute("usuario", nombreUsuario);
+            session.setAttribute("rol", usuario.getRol());
 
             return switch (usuario.getRol()) {
-                case "administrador" -> "index.html";
-                case "secretario" -> "index.html";
-                case "soporte" -> "index.html";
+                case "administrador" -> "redirect:/administrador/dashboard";
                 case "estudiante" -> "redirect:/estudiante/dashboard";
                 default -> "index.html";
             };
